@@ -3,16 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Regiao.Api", "src\Regiao.Api\Regiao.Api.csproj", "{5F727755-A06E-421C-9ACE-430CB5B0B8E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Regiao.Api", "src\Regiao.Api\Regiao.Api.csproj", "{5F727755-A06E-421C-9ACE-430CB5B0B8E0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{E1A715E0-FF71-4164-B124-F59C3D404E72}"
 	ProjectSection(SolutionItems) = preProject
 		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Regiao.Domain", "src\Regiao.Domain\Regiao.Domain.csproj", "{66BA580F-0A65-48A3-8F97-D00F35DD496F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Regiao.Domain", "src\Regiao.Domain\Regiao.Domain.csproj", "{66BA580F-0A65-48A3-8F97-D00F35DD496F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Regiao.Infra", "src\Regiao.Infra\Regiao.Infra.csproj", "{95812749-C9B2-4826-9FB0-811715383A88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Regiao.Infra", "src\Regiao.Infra\Regiao.Infra.csproj", "{95812749-C9B2-4826-9FB0-811715383A88}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Regiao.Worker", "src\Regiao.Worker\Regiao.Worker.csproj", "{B5D2CFC0-17A3-4A45-933D-1A7261636730}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Regiao.UnitTests", "src\Regiao.Test\Regiao.UnitTests\Regiao.UnitTests.csproj", "{FC3D5581-BF1A-445B-8385-F86D743C4503}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +36,14 @@ Global
 		{95812749-C9B2-4826-9FB0-811715383A88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95812749-C9B2-4826-9FB0-811715383A88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95812749-C9B2-4826-9FB0-811715383A88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5D2CFC0-17A3-4A45-933D-1A7261636730}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5D2CFC0-17A3-4A45-933D-1A7261636730}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5D2CFC0-17A3-4A45-933D-1A7261636730}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5D2CFC0-17A3-4A45-933D-1A7261636730}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC3D5581-BF1A-445B-8385-F86D743C4503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC3D5581-BF1A-445B-8385-F86D743C4503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC3D5581-BF1A-445B-8385-F86D743C4503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC3D5581-BF1A-445B-8385-F86D743C4503}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
