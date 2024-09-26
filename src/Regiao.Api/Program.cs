@@ -1,19 +1,17 @@
-using FluentValidation;
+using Regiao.AntiCorruption.BrasilApiService;
 using Regiao.Api.Endpoints;
 using Regiao.Infra.Configurations;
-using Regiao.Infra.ExternalServices.BrasilApiService.BrasilApiService;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpClient();
 builder.Services.ConfigureDatabase(builder.Configuration);
-builder.Services.ConfigureRepositories();
 builder.Services.AddDomainService();
+builder.Services.ConfigureRepositories();
 builder.Services.AddBrasilApiClientExtensions(builder.Configuration);
-//builder.Services.AddValidatorsFromAssemblyContaining<CriarContatoRequestValidator>();
 builder.AddFluentValidationEndpointFilter();
 
 var app = builder.Build();
@@ -25,7 +23,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseRouting();
+app.MapControllers();
 app.RegisterContatosEndpoints();
 
 app.Run();

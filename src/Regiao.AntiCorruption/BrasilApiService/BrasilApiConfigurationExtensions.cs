@@ -1,8 +1,9 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Refit;
+using Regiao.AntiCorruption.BrasilApiService.Polices;
 
-namespace Regiao.Infra.ExternalServices.BrasilApiService.BrasilApiService;
+namespace Regiao.AntiCorruption.BrasilApiService;
 
 public static class BrasilApiConfigurationExtensions
 {
@@ -10,6 +11,9 @@ public static class BrasilApiConfigurationExtensions
     {
         var settings = configuration.GetSection(nameof(BrasilApiSettings)).Get<BrasilApiSettings>();
 
-        services.AddRefitClient<IBrasilApi>().ConfigureHttpClient(c => c.BaseAddress = new Uri(settings.BaseUrl));
+        services.AddRefitClient<IBrasilApi>()
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(settings.BaseUrl))
+            .SetHandlerLifetime(TimeSpan.FromMinutes(2))
+            .AddPolicyHandler(HttpRetryPolicy.GetRetryPolicy());
     }
 }
