@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Regiao.Domain.Command;
 using Regiao.Domain.Contracts;
 
 namespace Regiao.Api.Endpoints
@@ -9,15 +10,17 @@ namespace Regiao.Api.Endpoints
         {
             var regiaoRoute = routes.MapGroup("/api/v1/regioes");
 
-            regiaoRoute.MapGet("", async (IRegiaoRepository regiaoRepository, [FromQuery] string? ddd) =>
-             {
-                 var contatos = await regiaoRepository.GetByDdd(ddd);
+            regiaoRoute.MapPost("",
+                async (ICriaRegiaoService criaContatoService, [FromQuery] string? ddd, string? numero) =>
+        {
+            var command = new CriaRegiaoCommand(ddd, numero);
+            await criaContatoService.Handle(command);
 
-                 return TypedResults.Ok(contatos);
-             })
-               .WithName("BuscaRegioes")
-               .WithOpenApi()
-               .AddFluentValidationFilter();
+            return TypedResults.NoContent();
+        })
+    .WithName("CriaContato")
+    .WithOpenApi()
+    .AddFluentValidationFilter();
         }
     }
 
