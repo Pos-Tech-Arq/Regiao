@@ -1,7 +1,11 @@
 ﻿namespace Regiao.Domain.Command;
 
-public class CriaRegiaoCommand(string ddd, string numero)
+public class CriaRegiaoCommand
 {
-    public string Ddd => ddd;
-    public string Numero => numero;
+    public string Ddd { get; set; }
+
+    public CriaRegiaoCommand(string ddd)
+    {
+        Ddd = ddd;
+    }
 }

@@ -1,6 +1,8 @@
+using MassTransit;
 using Regiao.AntiCorruption.BrasilApiService;
 using Regiao.Api.Endpoints;
 using Regiao.Infra.Configurations;
+using Regiao.Worker.Consumer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +14,23 @@ builder.Services.ConfigureDatabase(builder.Configuration);
 builder.Services.ConfigureRepositories();
 builder.Services.AddDomainService();
 builder.Services.AddBrasilApiClientExtensions(builder.Configuration);
-//builder.Services.AddValidatorsFromAssemblyContaining<CriarContatoRequestValidator>();
 builder.AddFluentValidationEndpointFilter();
+builder.Services.AddMassTransit(busConfigurator =>
+{
+    busConfigurator.SetSnakeCaseEndpointNameFormatter();
+    busConfigurator.AddConsumer<ContatoCriadoConsumer>();
+
+    busConfigurator.UsingRabbitMq((context, busFactoryConfigurator) =>
+    {
+        busFactoryConfigurator.Host("localhost", hostConfigurator =>
+        {
+            hostConfigurator.Username("guest");
+            hostConfigurator.Password("guest");
+        });
+        busFactoryConfigurator.UseJsonDeserializer();
+        busFactoryConfigurator.ConfigureEndpoints(context);
+    });
+});
 
 var app = builder.Build();
 

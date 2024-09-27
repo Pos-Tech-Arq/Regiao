@@ -11,9 +11,9 @@ namespace Regiao.Api.Endpoints
             var regiaoRoute = routes.MapGroup("/api/v1/regioes");
 
             regiaoRoute.MapPost("",
-                async (ICriaRegiaoService criaContatoService, [FromQuery] string? ddd, string? numero) =>
+                async (ICriaRegiaoService criaContatoService, [FromQuery] string? ddd) =>
         {
-            var command = new CriaRegiaoCommand(ddd, numero);
+            var command = new CriaRegiaoCommand(ddd);
             await criaContatoService.Handle(command);
 
             return TypedResults.NoContent();
