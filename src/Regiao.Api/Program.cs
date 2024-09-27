@@ -1,7 +1,6 @@
-using FluentValidation;
+using Regiao.AntiCorruption.BrasilApiService;
 using Regiao.Api.Endpoints;
 using Regiao.Infra.Configurations;
-using Regiao.Infra.ExternalServices.BrasilApiService.BrasilApiService;
 
 var builder = WebApplication.CreateBuilder(args);
 

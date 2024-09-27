@@ -3,58 +3,56 @@ using Regiao.Domain.Command;
 using Regiao.Domain.Contracts;
 using Regiao.Domain.Entities;
 using Regiao.Domain.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Regiao.UnitTests
+namespace Regiao.UnitTests;
+
+public class CriaRegiaoServiceTests
 {
-    public class CriaRegiaoServiceTests
+    private readonly Mock<IRegiaoRepository> _regiaoRepositoryMock;
+    private readonly Mock<IBuscaRegiaoService> _buscaRegiaoServiceMock;
+    private readonly CriaRegiaoService _criaRegiaoService;
+
+    public CriaRegiaoServiceTests()
     {
-        private readonly Mock<IRegiaoRepository> _regiaoRepositoryMock;
-        private readonly Mock<IBuscaRegiaoService> _buscaRegiaoServiceMock;
-        private readonly CriaRegiaoService _criaRegiaoService;
+        _regiaoRepositoryMock = new Mock<IRegiaoRepository>();
+        _buscaRegiaoServiceMock = new Mock<IBuscaRegiaoService>();
+        _criaRegiaoService = new CriaRegiaoService(_regiaoRepositoryMock.Object, _buscaRegiaoServiceMock.Object);
+    }
 
-        public CriaRegiaoServiceTests()
-        {
-            _regiaoRepositoryMock = new Mock<IRegiaoRepository>();
-            _buscaRegiaoServiceMock = new Mock<IBuscaRegiaoService>();
-            _criaRegiaoService = new CriaRegiaoService(_regiaoRepositoryMock.Object, _buscaRegiaoServiceMock.Object);
-        }
+    [Fact]
+    public async Task Handle_ShouldCreateRegiao_WhenValidCommandIsProvided()
+    {
+        // Arrange
+        var criaRegiaoCommand = new CriaRegiaoCommand("11", "12345678");
 
-        [Fact]
-        public async Task Handle_ShouldCreateRegiao_WhenValidCommandIsProvided()
-        {
-            // Arrange
-            var criaRegiaoCommand = new CriaRegiaoCommand("11", "12345678");
+        var mockRegiao = new Domain.Entities.Regiao("11", new List<Cidade>(), "SP");
 
-            var mockRegiao = new Regiao.Domain.Entities.Regiao("11", new List<Cidade>(), "SP");
+        _regiaoRepositoryMock.Setup(r => r.GetByDdd(It.IsAny<string>()))
+            .ReturnsAsync((Domain.Entities.Regiao)null);
+        _buscaRegiaoServiceMock.Setup(b => b.BuscaRegiao(It.IsAny<string>())).ReturnsAsync(mockRegiao);
+        _regiaoRepositoryMock.Setup(r => r.Create(It.IsAny<Domain.Entities.Regiao>()))
+            .Returns(Task.CompletedTask);
 
-            _regiaoRepositoryMock.Setup(r => r.GetByDdd(It.IsAny<string>())).ReturnsAsync((Regiao.Domain.Entities.Regiao)null);
-            _buscaRegiaoServiceMock.Setup(b => b.BuscaRegiao(It.IsAny<string>())).ReturnsAsync(mockRegiao);
-            _regiaoRepositoryMock.Setup(r => r.Create(It.IsAny<Regiao.Domain.Entities.Regiao>())).Returns(Task.CompletedTask);
+        // Act
+        await _criaRegiaoService.Handle(criaRegiaoCommand);
 
-            // Act
-            await _criaRegiaoService.Handle(criaRegiaoCommand);
+        // Assert
+        _regiaoRepositoryMock.Verify(
+            r => r.Create(It.Is<Domain.Entities.Regiao>(r => r.Ddd == "11" && r.Estado == "SP")), Times.Once);
+        _buscaRegiaoServiceMock.Verify(b => b.BuscaRegiao("11"), Times.Once);
+    }
 
-            // Assert
-            _regiaoRepositoryMock.Verify(r => r.Create(It.Is<Regiao.Domain.Entities.Regiao>(r => r.Ddd == "11" && r.Estado == "SP")), Times.Once);
-            _buscaRegiaoServiceMock.Verify(b => b.BuscaRegiao("11"), Times.Once);
-        }
+    [Fact]
+    public async Task Handle_ShouldThrowException_WhenRegiaoCreationFails()
+    {
+        // Arrange
+        var criaRegiaoCommand = new CriaRegiaoCommand("11", "12345678");
 
-        [Fact]
-        public async Task Handle_ShouldThrowException_WhenRegiaoCreationFails()
-        {
-            // Arrange
-            var criaRegiaoCommand = new CriaRegiaoCommand("11", "12345678");
+        _regiaoRepositoryMock.Setup(r => r.GetByDdd(It.IsAny<string>()))
+            .ReturnsAsync((Domain.Entities.Regiao)null);
+        _buscaRegiaoServiceMock.Setup(b => b.BuscaRegiao(It.IsAny<string>())).ThrowsAsync(new Exception("Error"));
 
-            _regiaoRepositoryMock.Setup(r => r.GetByDdd(It.IsAny<string>())).ReturnsAsync((Regiao.Domain.Entities.Regiao)null);
-            _buscaRegiaoServiceMock.Setup(b => b.BuscaRegiao(It.IsAny<string>())).ThrowsAsync(new Exception("Error"));
-
-            // Act & Assert
-            await Assert.ThrowsAsync<Exception>(() => _criaRegiaoService.Handle(criaRegiaoCommand));
-        }
+        // Act & Assert
+        await Assert.ThrowsAsync<Exception>(() => _criaRegiaoService.Handle(criaRegiaoCommand));
     }
 }

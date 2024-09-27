@@ -2,20 +2,14 @@
 using Regiao.Domain.Contracts;
 using Regiao.Domain.Services;
 using Regiao.Infra.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Regiao.Infra.Configurations
+namespace Regiao.Infra.Configurations;
+
+public static class AddDomainServiceExtension
 {
-    public static class AddDomainServiceExtension
+    public static void AddDomainService(this IServiceCollection serviceCollection)
     {
-        public static void AddDomainService(this IServiceCollection serviceCollection)
-        {
-            serviceCollection.AddScoped<IBuscaRegiaoService, BuscaRegiaoService>();
-            serviceCollection.AddScoped<ICriaRegiaoService, CriaRegiaoService>();
-        }
+        serviceCollection.AddScoped<IBuscaRegiaoService, BuscaRegiaoService>();
+        serviceCollection.AddScoped<ICriaRegiaoService, CriaRegiaoService>();
     }
 }

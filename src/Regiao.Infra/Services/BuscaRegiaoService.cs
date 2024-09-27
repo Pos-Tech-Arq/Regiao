@@ -1,7 +1,6 @@
-﻿using RegiaoEntities = Regiao.Domain.Entities;
+﻿using Regiao.AntiCorruption.BrasilApiService;
 using Regiao.Domain.Contracts;
-using Regiao.Infra.ExternalServices.BrasilApiService;
-using Regiao.Infra.ExternalServices.BrasilApiService.BrasilApiService;
+using RegiaoEntities = Regiao.Domain.Entities;
 
 namespace Regiao.Infra.Services;
 

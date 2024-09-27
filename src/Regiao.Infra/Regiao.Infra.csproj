@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+      <ProjectReference Include="..\Regiao.AntiCorruption\Regiao.AntiCorruption.csproj"/>
     <ProjectReference Include="..\Regiao.Domain\Regiao.Domain.csproj" />
   </ItemGroup>
 
