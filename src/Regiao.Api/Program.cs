@@ -10,13 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureDatabase(builder.Configuration);
+builder.Services.ConfigureRabbit();
 builder.Services.ConfigureRepositories();
 builder.Services.AddDomainService();
 builder.Services.AddBrasilApiClientExtensions(builder.Configuration);
 builder.AddFluentValidationEndpointFilter();
 builder.Services.AddHealthChecks().ForwardToPrometheus();
 builder.Services.ConfigureOpenTelemetry();
-builder.Services.ConfigureRabbit();
 
 var app = builder.Build();
 

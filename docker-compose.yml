@@ -17,6 +17,8 @@ services:
     networks:
       - regiao-service-network
     depends_on:
+      rabbitmq:
+        condition: service_started
       sqlserver:
         condition: service_healthy
 
@@ -72,6 +74,15 @@ services:
       - "3000:3000"
     networks:
         - regiao-service-network
+  
+  rabbitmq:
+    image: rabbitmq:management
+    hostname: "rabbitmq"
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - regiao-service-network
   
    
 networks:

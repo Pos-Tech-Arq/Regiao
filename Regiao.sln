@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{E1A715E0-FF71-4164-B124-F59C3D404E72}"
 	ProjectSection(SolutionItems) = preProject
 		Dockerfile = Dockerfile
+		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Regiao.Domain", "src\Regiao.Domain\Regiao.Domain.csproj", "{66BA580F-0A65-48A3-8F97-D00F35DD496F}"
