@@ -14,4 +14,4 @@ datasources:
     url: sqlserver:1433
     database: RegioesDb
     user: sa
-    password: SenhaForte#369
+    password: "SenhaForte#369"
