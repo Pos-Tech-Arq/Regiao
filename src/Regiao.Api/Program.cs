@@ -1,13 +1,10 @@
-using MassTransit;
+using Prometheus;
 using Regiao.AntiCorruption.BrasilApiService;
 using Regiao.Api.Endpoints;
 using Regiao.Infra.Configurations;
-using Regiao.Worker.Consumer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureDatabase(builder.Configuration);
@@ -15,33 +12,21 @@ builder.Services.ConfigureRepositories();
 builder.Services.AddDomainService();
 builder.Services.AddBrasilApiClientExtensions(builder.Configuration);
 builder.AddFluentValidationEndpointFilter();
-builder.Services.AddMassTransit(busConfigurator =>
-{
-    busConfigurator.SetSnakeCaseEndpointNameFormatter();
-    busConfigurator.AddConsumer<ContatoCriadoConsumer>();
-
-    busConfigurator.UsingRabbitMq((context, busFactoryConfigurator) =>
-    {
-        busFactoryConfigurator.Host("localhost", hostConfigurator =>
-        {
-            hostConfigurator.Username("guest");
-            hostConfigurator.Password("guest");
-        });
-        busFactoryConfigurator.UseJsonDeserializer();
-        busFactoryConfigurator.ConfigureEndpoints(context);
-    });
-});
+builder.Services.AddHealthChecks().ForwardToPrometheus();
+builder.Services.ConfigureOpenTelemetry();
+builder.Services.ConfigureRabbit();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+app.UseHttpMetrics();
 app.UseHttpsRedirection();
 app.RegisterContatosEndpoints();
+app.MapMetrics();
 
 app.Run();

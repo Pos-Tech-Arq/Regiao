@@ -23,7 +23,7 @@ public class CriaRegiaoServiceTests
     public async Task Handle_ShouldCreateRegiao_WhenValidCommandIsProvided()
     {
         // Arrange
-        var criaRegiaoCommand = new CriaRegiaoCommand("11", "12345678");
+        var criaRegiaoCommand = new CriaRegiaoCommand("11");
 
         var mockRegiao = new Domain.Entities.Regiao("11", new List<Cidade>(), "SP");
 
@@ -46,7 +46,7 @@ public class CriaRegiaoServiceTests
     public async Task Handle_ShouldThrowException_WhenRegiaoCreationFails()
     {
         // Arrange
-        var criaRegiaoCommand = new CriaRegiaoCommand("11", "12345678");
+        var criaRegiaoCommand = new CriaRegiaoCommand("11");
 
         _regiaoRepositoryMock.Setup(r => r.GetByDdd(It.IsAny<string>()))
             .ReturnsAsync((Domain.Entities.Regiao)null);
