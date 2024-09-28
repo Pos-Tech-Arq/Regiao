@@ -6,31 +6,32 @@ public class Regiao : Entidade, IAggregateRoot
 {
     public string Ddd { get; private set; }
 
-    public ICollection<Cidade> Cidades { get; private set; }
     public string Estado { get; private set; }
 
-    public Regiao(string ddd)
+    private readonly List<Cidade> _cidades;
+    public IReadOnlyCollection<Cidade> Cidades => _cidades;
+
+    // public Regiao(string ddd)
+    // {
+    //     Ddd = ddd;
+    //     Id = Guid.NewGuid();
+    // }
+
+    public Regiao(string ddd, string estado)
     {
         Ddd = ddd;
-        Id = Guid.NewGuid();
-    }
-    public Regiao(string ddd, ICollection<Cidade> cidades, string estado)
-    {
-        Ddd = ddd;
-        Id = Guid.NewGuid();
-        Cidades = cidades;
         Estado = estado;
+        _cidades = new List<Cidade>();
+        Id = Guid.NewGuid();
     }
 
-    public async Task AdicionaCidade(IRegiaoRepository regiaoRepository, IBuscaRegiaoService buscaRegiaoService)
+    public void AdicionaCidades(IEnumerable<Cidade> cidades)
     {
-        var regiao = await regiaoRepository.GetByDdd(this.Ddd) ?? await buscaRegiaoService.BuscaRegiao(this.Ddd);
-
-        this.Estado = regiao.Estado;
-        this.Cidades = regiao.Cidades;
+        _cidades.AddRange(cidades);
     }
 
-    private Regiao()
+    protected Regiao()
     {
+        _cidades = new List<Cidade>();
     }
 }

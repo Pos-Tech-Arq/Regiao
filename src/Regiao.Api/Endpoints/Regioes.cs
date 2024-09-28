@@ -2,26 +2,24 @@
 using Regiao.Domain.Command;
 using Regiao.Domain.Contracts;
 
-namespace Regiao.Api.Endpoints
+namespace Regiao.Api.Endpoints;
+
+public static class Regioes
 {
-    public static class Regioes
+    public static void RegisterRegiaoEndpoints(this IEndpointRouteBuilder routes)
     {
-        public static void RegisterContatosEndpoints(this IEndpointRouteBuilder routes)
-        {
-            var regiaoRoute = routes.MapGroup("/api/v1/regioes");
+        var regiaoRoute = routes.MapGroup("/api/v1/regioes");
 
-            regiaoRoute.MapPost("",
+        regiaoRoute.MapPost("",
                 async (ICriaRegiaoService criaContatoService, [FromQuery] string? ddd) =>
-        {
-            var command = new CriaRegiaoCommand(ddd);
-            await criaContatoService.Handle(command);
+                {
+                    var command = new CriaRegiaoCommand(ddd);
+                    await criaContatoService.Handle(command);
 
-            return TypedResults.NoContent();
-        })
-    .WithName("CriaContato")
-    .WithOpenApi()
-    .AddFluentValidationFilter();
-        }
+                    return TypedResults.NoContent();
+                })
+            .WithName("CriaRegiao")
+            .WithOpenApi()
+            .AddFluentValidationFilter();
     }
-
 }

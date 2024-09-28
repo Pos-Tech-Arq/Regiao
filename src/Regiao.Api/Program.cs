@@ -42,7 +42,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpMetrics();
-app.RegisterContatosEndpoints();
+app.RegisterRegiaoEndpoints();
 app.MapMetrics();
 
 app.Run();
+
+public partial class Program
+{
+}

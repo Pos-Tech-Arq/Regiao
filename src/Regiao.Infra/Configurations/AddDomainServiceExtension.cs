@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Regiao.AntiCorruption.BrasilApiService.Services;
 using Regiao.Domain.Contracts;
 using Regiao.Domain.Services;
-using Regiao.Infra.Services;
 
 namespace Regiao.Infra.Configurations;
 

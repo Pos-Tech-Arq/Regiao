@@ -1,10 +1,11 @@
 ﻿using Moq;
+using Regiao.AntiCorruption.BrasilApiService.Responses;
+using Regiao.AntiCorruption.BrasilApiService.Services;
 using Regiao.Domain.Command;
 using Regiao.Domain.Contracts;
-using Regiao.Domain.Entities;
 using Regiao.Domain.Services;
 
-namespace Regiao.UnitTests;
+namespace Regiao.UnitTests.Services;
 
 public class CriaRegiaoServiceTests
 {
@@ -25,11 +26,13 @@ public class CriaRegiaoServiceTests
         // Arrange
         var criaRegiaoCommand = new CriaRegiaoCommand("11");
 
-        var mockRegiao = new Domain.Entities.Regiao("11", new List<Cidade>(), "SP");
-
         _regiaoRepositoryMock.Setup(r => r.GetByDdd(It.IsAny<string>()))
             .ReturnsAsync((Domain.Entities.Regiao)null);
-        _buscaRegiaoServiceMock.Setup(b => b.BuscaRegiao(It.IsAny<string>())).ReturnsAsync(mockRegiao);
+        _buscaRegiaoServiceMock.Setup(b => b.BuscaRegiao(It.IsAny<string>())).ReturnsAsync(new RegiaoResponse
+        {
+            State = "SP",
+            cities = new List<string> { "São Paulo", "Osasco" }
+        });
         _regiaoRepositoryMock.Setup(r => r.Create(It.IsAny<Domain.Entities.Regiao>()))
             .Returns(Task.CompletedTask);
 
