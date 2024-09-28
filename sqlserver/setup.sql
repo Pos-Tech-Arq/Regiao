@@ -1,0 +1,5 @@
+IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'RegioesDb')
+BEGIN
+CREATE DATABASE RegioesDb;
+END
+GO

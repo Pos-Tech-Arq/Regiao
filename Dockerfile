@@ -14,15 +14,15 @@ COPY ["src/Regiao.AntiCorruption/Regiao.AntiCorruption.csproj", "Regiao.AntiCorr
 RUN dotnet restore "Regiao.Api/Regiao.Api.csproj"
 RUN dotnet restore "Regiao.Domain/Regiao.Domain.csproj"
 RUN dotnet restore "Regiao.Infra/Regiao.Infra.csproj"
-RUN dotnet restore "Regiao.Infra/Regiao.Worker.csproj"
-RUN dotnet restore "Regiao.Infra/Regiao.AntiCorruption.csproj"
+RUN dotnet restore "Regiao.Worker/Regiao.Worker.csproj"
+RUN dotnet restore "Regiao.AntiCorruption/Regiao.AntiCorruption.csproj"
 
 COPY . .
-WORKDIR "/src/Regiao.Api"
+WORKDIR "/src/src/Regiao.Api"
 
-RUN dotnet build "src/Regiao.Api.csproj" -c Release -o /app/build
+RUN dotnet build "Regiao.Api.csproj" -c Release -o /app/build
 FROM build AS publish
-RUN dotnet publish "src/Regiao.Api.csproj" -c Release -o /app/publish
+RUN dotnet publish "Regiao.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
