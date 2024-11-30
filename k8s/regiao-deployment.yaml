@@ -21,7 +21,7 @@ spec:
      - name: regiao-container
        image: franciscoasantana/regioes
        ports:
-       - containerPort: 8081
+       - containerPort: 8080
        envFrom:
        - configMapRef:
            name: config
