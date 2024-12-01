@@ -18,7 +18,7 @@ public static class ConfigureRabbitExtension
 
             busConfigurator.UsingRabbitMq((context, busFactoryConfigurator) =>
             {
-                busFactoryConfigurator.Host(rabbitMqHost, hostConfigurator =>
+                busFactoryConfigurator.Host(rabbitMqHost ?? "rabbitmq", hostConfigurator =>
                 {
                     hostConfigurator.Username("guest");
                     hostConfigurator.Password("guest");
