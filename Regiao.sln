@@ -7,8 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Regiao.Api", "src\Regiao.Ap
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{E1A715E0-FF71-4164-B124-F59C3D404E72}"
 	ProjectSection(SolutionItems) = preProject
-		Dockerfile = Dockerfile
 		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Regiao.Domain", "src\Regiao.Domain\Regiao.Domain.csproj", "{66BA580F-0A65-48A3-8F97-D00F35DD496F}"
@@ -17,15 +17,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Regiao.Infra", "src\Regiao.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Regiao.Worker", "src\Regiao.Worker\Regiao.Worker.csproj", "{B5D2CFC0-17A3-4A45-933D-1A7261636730}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Regiao.UnitTests", "src\Regiao.Test\Regiao.UnitTests\Regiao.UnitTests.csproj", "{FC3D5581-BF1A-445B-8385-F86D743C4503}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Regiao.UnitTests", "src\Regiao.Test\Regiao.UnitTests\Regiao.UnitTests.csproj", "{FC3D5581-BF1A-445B-8385-F86D743C4503}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{25F12955-B973-4C80-9F16-70E85A3538A3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7DADAF12-ED85-40DE-B694-AF37E940FF92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Regiao.AntiCorruption", "src\Regiao.AntiCorruption\Regiao.AntiCorruption.csproj", "{4FA91DA7-4B63-4E48-8576-DBA88442B1E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Regiao.AntiCorruption", "src\Regiao.AntiCorruption\Regiao.AntiCorruption.csproj", "{4FA91DA7-4B63-4E48-8576-DBA88442B1E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Regiao.IntegrationTests", "tests\Regiao.IntegrationTests\Regiao.IntegrationTests.csproj", "{31412CB6-FFF7-43B5-9CF1-53D0D82FACAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Regiao.IntegrationTests", "tests\Regiao.IntegrationTests\Regiao.IntegrationTests.csproj", "{31412CB6-FFF7-43B5-9CF1-53D0D82FACAB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{3E45B4FC-278C-40E0-BEF2-DD3431CC4E5A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deployment", "deployment", "{7907C988-E46A-4CBB-A018-2FC63AE0BAF3}"
+	ProjectSection(SolutionItems) = preProject
+		k8s\regiao-deployment.yaml = k8s\regiao-deployment.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "svc", "svc", "{70274641-B2C1-4838-BF57-5EE37B00D247}"
+	ProjectSection(SolutionItems) = preProject
+		k8s\regiao-service.yml = k8s\regiao-service.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,16 +77,18 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {7D55C2B6-BF8D-4002-80EB-85A621959CA1}
-	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5F727755-A06E-421C-9ACE-430CB5B0B8E0} = {25F12955-B973-4C80-9F16-70E85A3538A3}
 		{66BA580F-0A65-48A3-8F97-D00F35DD496F} = {25F12955-B973-4C80-9F16-70E85A3538A3}
 		{95812749-C9B2-4826-9FB0-811715383A88} = {25F12955-B973-4C80-9F16-70E85A3538A3}
-		{FC3D5581-BF1A-445B-8385-F86D743C4503} = {7DADAF12-ED85-40DE-B694-AF37E940FF92}
 		{B5D2CFC0-17A3-4A45-933D-1A7261636730} = {25F12955-B973-4C80-9F16-70E85A3538A3}
+		{FC3D5581-BF1A-445B-8385-F86D743C4503} = {7DADAF12-ED85-40DE-B694-AF37E940FF92}
 		{4FA91DA7-4B63-4E48-8576-DBA88442B1E0} = {25F12955-B973-4C80-9F16-70E85A3538A3}
 		{31412CB6-FFF7-43B5-9CF1-53D0D82FACAB} = {7DADAF12-ED85-40DE-B694-AF37E940FF92}
+		{7907C988-E46A-4CBB-A018-2FC63AE0BAF3} = {3E45B4FC-278C-40E0-BEF2-DD3431CC4E5A}
+		{70274641-B2C1-4838-BF57-5EE37B00D247} = {3E45B4FC-278C-40E0-BEF2-DD3431CC4E5A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7D55C2B6-BF8D-4002-80EB-85A621959CA1}
 	EndGlobalSection
 EndGlobal

@@ -9,10 +9,12 @@ public static class ConfigureDatabaseExtension
 {
     public static void ConfigureDatabase(this IServiceCollection serviceCollection, IConfiguration configuration)
     {
+        var cs = configuration.GetConnectionString("DefaultConnection").Replace("@server", Environment.GetEnvironmentVariable("Sql_Server"));
+
         serviceCollection.AddDbContext<ApplicationDbContext>(
             options =>
                 options.UseSqlServer(
-                    configuration.GetConnectionString("DefaultConnection"),
+                    cs,
                     x => x.MigrationsAssembly("Regiao.Infra")
                 ));
     }

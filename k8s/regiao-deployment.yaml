@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: regiao-api
+  labels:
+    app: regiao-api
+  annotations:
+    author: Francisco Santana
+    app-version: 1.0.0
+spec:
+  replicas : 1
+  selector:
+    matchLabels:
+      app: regiao-api
+  template:
+    metadata:
+      labels:
+        app: regiao-api
+    spec:
+     containers:
+     - name: regiao-container
+       image: franciscoasantana/regioes
+       ports:
+       - containerPort: 8080
+       envFrom:
+       - configMapRef:
+           name: config
