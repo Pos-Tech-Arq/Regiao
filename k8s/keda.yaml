@@ -1,0 +1,19 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: rabbitmq-scaledobject
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: regiao-api # O nome do seu Deployment
+  pollingInterval: 5
+  cooldownPeriod: 300
+  minReplicaCount: 0
+  maxReplicaCount: 10
+  triggers:
+    - type: rabbitmq
+      metadata:
+        queueName: contato_criado # Nome da fila no RabbitMQ
+        host: "amqp://guest:guest@rabbitmq-svc.default.svc.cluster.local:5672/" # A variável de ambiente ou o endereço do RabbitMQ
+        mode: QueueLength
+        value: "5"

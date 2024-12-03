@@ -19,7 +19,7 @@ public class ContatoCriadoConsumer : IConsumer<ContatoCriado>
         var message = context.Message;
 
         string ddd = message.Ddd;
-
+        await Task.Delay(40000);
         await _criaRegiaoService.Handle(new CriaRegiaoCommand(ddd));
     }
 }

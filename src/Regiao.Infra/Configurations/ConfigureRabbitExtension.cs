@@ -1,5 +1,4 @@
 ﻿using MassTransit;
-using MassTransit.RabbitMqTransport;
 using Microsoft.Extensions.DependencyInjection;
 using Regiao.Worker.Consumer;
 
@@ -23,6 +22,7 @@ public static class ConfigureRabbitExtension
                     hostConfigurator.Username("guest");
                     hostConfigurator.Password("guest");
                 });
+                busFactoryConfigurator.PrefetchCount = 1;
                 busFactoryConfigurator.UseJsonDeserializer();
                 busFactoryConfigurator.ConfigureEndpoints(context);
             });
